@@ -20,7 +20,7 @@
     // Load actual content
     const contentNode = document.getElementById('content');
     try {
-      fetch('/statement.txt').then(_ => _.text()).then(content => {
+      fetch('./statement.txt').then(_ => _.text()).then(content => {
         let _content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');
         contentNode.innerHTML += _content;
       })
