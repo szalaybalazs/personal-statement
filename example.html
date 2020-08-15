@@ -81,7 +81,7 @@
 
         const index = content.findIndex(_ => _.path === example);
         titleNode.innerText = titleNode.innerText.replace('##', content[index].title);
-        scoreNode.innerText = scoreNode.innerText.replace('##', content[index].score);
+        scoreNode.innerText = scoreNode.innerText.replace('##', content[index].score * 10 + ' / 10');
 
         currentNode.innerText = `${index + 1} / ${content.length}`;
 
