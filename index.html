@@ -43,7 +43,7 @@
         const content = await res.json();
         numNode.innerText = numNode.innerText.replace('##', content.length);
 
-        content.sort((a, b) => ('' + a.title).localeCompare(b.title)).map(statement => {
+        content.sort((a, b) => ('' + a.title).localeCompare(b.title, undefined, {numeric: true, sensitivity: 'base'})).map(statement => {
           const html = `
             <li style='margin-bottom: 12px'>
               <a style='color: #333' href='./example.html?${statement.path}'>
