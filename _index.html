@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Statement</title>
+  <style>
+    html, body {
+      background-color: white;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <a href="./examples.html">Example Statements</a>
+  <h1>Personal Statement</h1>
+  <h2 id='update'>Last update: </h2>
+  <div class="data">
+    <span id='chars'>Character number: ##</span>
+    <br>
+    <span id='lines'>Number of lines: ##</span>
+  </div>
+  <hr>
+  <p id="content" />
+  <script>
+    // Load actual content
+    const contentNode = document.getElementById('content');
+    const lineNode = document.getElementById('lines');
+    const characterNode = document.getElementById('chars');
+    const headers = new Headers();
+    headers.append('pragma', 'no-cache');
+    headers.append('cache-control', 'no-cache');
+
+    const init = {
+      method: 'GET',
+      headers,
+    };
+    try {
+      fetch('./statement.txt', init).then(_ => _.text()).then(content => {
+        const segments = content.split(/(?:\r\n|\r|\n)/g);
+        lineNode.innerText = lineNode.innerText.replace('##', segments.length);
+
+        characterNode.innerText = characterNode.innerText.replace('##', segments.join('').length);
+
+        let _content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        contentNode.innerHTML += _content;
+      })
+    } catch (error) {
+      contentNode.innerHTML += 'ERROR';
+    }
+
+    // Load last update date;
+    const dateNode = document.getElementById('update');
+    try {
+      fetch('https://api.github.com/repos/szalaybalazs/personal-statement/commits/master', { referrerPolicy: "no-referrer" }).then(res => res.json()).then(res => {
+        const title = res.commit.message;
+        const date = new Date(res.commit.author.date);
+        const dateString = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${('0000' + date.getHours()).slice(-2)}:${('000' + date.getMinutes()).slice(-2)} (${title})`;
+        dateNode.innerHTML += dateString;
+      });
+    } catch (error) {
+      dateNode.innerHTML += 'Unknown' 
+    }
+  </script>
+</body>
+</html>
