@@ -14,13 +14,25 @@
 <body>
   <h1>Personal Statement - Balázs Szalay</h1>
   <h2 id='update'>Last update: </h2>
+  <div class="data">
+    <span id='chars'>Character number: ##</span>
+    <br>
+    <span id='lines'>Number of lines: ##</span>
+  </div>
   <hr>
   <p id="content" />
   <script>
     // Load actual content
     const contentNode = document.getElementById('content');
+    const lineNode = document.getElementById('lines');
+    const characterNode = document.getElementById('chars');
     try {
       fetch('./statement.txt').then(_ => _.text()).then(content => {
+        const segments = content.split(/(?:\r\n|\r|\n)/g);
+        lineNode.innerText = lineNode.innerText.replace('##', segments.length);
+
+        characterNode.innerText = characterNode.innerText.replace('##', segments.join('').length);
+
         let _content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');
         contentNode.innerHTML += _content;
       })
