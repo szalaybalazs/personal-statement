@@ -35,7 +35,16 @@
       try {
         const example = window.location.search.replace('?', '');
   
-        const res = await fetch(`./examples/${example}.txt`);
+        const headers = new Headers();
+        headers.append('pragma', 'no-cache');
+        headers.append('cache-control', 'no-cache');
+
+        const init = {
+          method: 'GET',
+          headers,
+        };
+
+        const res = await fetch(`./examples/${example}.txt`, init);
         if (res.status !== 200) return contentNode.innerHTML += 'ERROR: Not found';
         const content = await res.text();
         const segments = content.split(/(?:\r\n|\r|\n)/g);
@@ -48,9 +57,17 @@
         contentNode.innerHTML += 'ERROR';
       }
       try {
+        const headers = new Headers();
+        headers.append('pragma', 'no-cache');
+        headers.append('cache-control', 'no-cache');
+
+        const init = {
+          method: 'GET',
+          headers,
+        };
         const example = window.location.search.replace('?', '');
   
-        const res = await fetch(`./examples/main.json`);
+        const res = await fetch(`./examples/main.json`, init);
         if (res.status !== 200) return contentNode.innerHTML += 'ERROR: Not found';
         const content = await res.json();
         console.log(content)
