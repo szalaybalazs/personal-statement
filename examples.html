@@ -13,7 +13,7 @@
 </head>
 <body>
   <span>
-    <a href="/index.html">Personal Statement</a>
+    <a href="./index.html">Personal Statement</a>
     / Examples
   </span>
 
@@ -47,7 +47,7 @@
         content.sort((a, b) => ('' + a.title).localeCompare(b.title)).map(statement => {
           const html = `
             <li style='margin-bottom: 12px'>
-              <a style='color: #333' href='/example.html?${statement.path}'>
+              <a style='color: #333' href='./example.html?${statement.path}'>
                 <span>
                   <strong>
                     ${statement.title}
