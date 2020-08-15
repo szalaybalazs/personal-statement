@@ -31,8 +31,8 @@
     // Load last update date;
     const dateNode = document.getElementById('update');
     try {
-      fetch('https://api.github.com/repos/szalaybalazs/personal-statement/branches/master').then(res => res.json()).then(res => {
-        const date = new Date(res.commit.commit.author.date);
+      fetch('https://api.github.com/repos/szalaybalazs/personal-statement/commits/master').then(res => res.json()).then(res => {
+        const date = new Date(res.commit.author.date);
         const dateString = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${('0000' + date.getHours()).slice(-2)}:${('000' + date.getMinutes()).slice(-2)}`;
         dateNode.innerHTML += dateString;
       });
