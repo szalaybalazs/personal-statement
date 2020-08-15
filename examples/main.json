@@ -1,0 +1,42 @@
+[
+  {
+    "path": "unicompare-2",
+    "title": "Unicompare 2.",
+    "score": 1.0
+  },
+  {
+    "path": "unicompare-4",
+    "title": "Unicompare 4.",
+    "score": 0.8
+  },
+  {
+    "path": "unicompare-3",
+    "title": "Unicompare 3.",
+    "score": 0.8
+  },
+  {
+    "path": "unicompare-1",
+    "title": "Unicompare 1.",
+    "score": 0.4
+  },
+  {
+    "path": "unicompare-5",
+    "title": "Unicompare 5.",
+    "score": 0.9
+  },
+  {
+    "path": "example-1",
+    "title": "Example 1.",
+    "score": 0.7
+  },
+  {
+    "path": "example-2",
+    "title": "Example 2.",
+    "score": 0.7
+  },
+  {
+    "path": "example-3",
+    "title": "Example 3.",
+    "score": 0.8
+  }
+]

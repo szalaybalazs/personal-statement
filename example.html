@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Statement</title>
+  <style>
+    html, body {
+      background-color: white;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <span>
+    <a href="/index.html">Personal Statement</a>
+    /
+    <a href="/examples.html">Examples</a>
+    / Example
+  </span>
+  <h1 id='title'>##</h1>
+  <h2 id='score'>Score: ##</h2>
+  <div class="data">
+    <span id='chars'>Character number: ##</span>
+  </div>
+  <hr>
+  <p id="content" />
+  <script async>
+    (async () => {
+      // Load actual content
+      const contentNode = document.getElementById('content');
+      const characterNode = document.getElementById('chars');
+      const titleNode = document.getElementById('title');
+      const scoreNode = document.getElementById('score');
+      try {
+        const example = window.location.search.replace('?', '');
+  
+        const res = await fetch(`./examples/${example}.txt`);
+        if (res.status !== 200) return contentNode.innerHTML += 'ERROR: Not found';
+        const content = await res.text();
+        const segments = content.split(/(?:\r\n|\r|\n)/g);
+  
+        characterNode.innerText = characterNode.innerText.replace('##', segments.join('').length);
+  
+        let _content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        contentNode.innerHTML += _content;
+      } catch (error) {
+        contentNode.innerHTML += 'ERROR';
+      }
+      try {
+        const example = window.location.search.replace('?', '');
+  
+        const res = await fetch(`./examples/main.json`);
+        if (res.status !== 200) return contentNode.innerHTML += 'ERROR: Not found';
+        const content = await res.json();
+        console.log(content)
+        titleNode.innerText = titleNode.innerText.replace('##', content.find(_ => _.path === example).title);
+        scoreNode.innerText = scoreNode.innerText.replace('##', content.find(_ => _.path === example).score);
+        
+      } catch (error) {
+        titleNode.innerText = titleNode.innerText.replace('##', "Not found");
+      }
+    })();
+  </script>
+</body>
+</html>
