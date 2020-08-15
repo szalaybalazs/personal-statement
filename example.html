@@ -24,7 +24,12 @@
     <span id='chars'>Character number: ##</span>
   </div>
   <hr>
-  <p style='max-width: 600px; margin: auto' id="content" />
+  <p style='max-width: 600px; margin: auto; padding-top: 32px;' id="content" />
+  <div class="pagination" style='margin: auto; width: fit-content; margin-top: 32px; margin-bottom: 32px;'>
+    <a id='paginate-left'><</a>
+    <span id='current-index'>## / ##</span>
+    <a id='paginate-right'>></a>
+  </div>
   <script async>
     (async () => {
       // Load actual content
@@ -32,6 +37,10 @@
       const characterNode = document.getElementById('chars');
       const titleNode = document.getElementById('title');
       const scoreNode = document.getElementById('score');
+      
+      const leftNode = document.getElementById('paginate-left');
+      const rightNode = document.getElementById('paginate-right');
+      const currentNode = document.getElementById('current-index');
       try {
         const example = window.location.search.replace('?', '');
   
@@ -69,10 +78,19 @@
   
         const res = await fetch(`./examples/main.json`, init);
         if (res.status !== 200) return contentNode.innerHTML += 'ERROR: Not found';
-        const content = await res.json();
-        console.log(content)
-        titleNode.innerText = titleNode.innerText.replace('##', content.find(_ => _.path === example).title);
-        scoreNode.innerText = scoreNode.innerText.replace('##', content.find(_ => _.path === example).score);
+        let content = await res.json();
+        content = content.sort((a, b) => ('' + a.title).localeCompare(b.title));
+
+        const index = content.findIndex(_ => _.path === example);
+        titleNode.innerText = titleNode.innerText.replace('##', content[index].title);
+        scoreNode.innerText = scoreNode.innerText.replace('##', content[index].score);
+
+        currentNode.innerText = `${index + 1} / ${content.length}`;
+
+        if (content[index + 1]) rightNode.href = `./example.html?${content[index + 1].path}`;
+        else rightNode.style = 'opacity: 0.4;'
+        if (content[index - 1]) leftNode.href = `./example.html?${content[index - 1].path}`;
+        else leftNode.style = 'opacity: 0.4;'
         
       } catch (error) {
         titleNode.innerText = titleNode.innerText.replace('##', "Not found");
